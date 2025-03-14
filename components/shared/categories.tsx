@@ -25,14 +25,14 @@ export const Categories = ({className}: Props) => {
             {
                 goods.map(({name, id}, index) => (
                     <a
-                        key={id}
+                        key={index}
                         href={`/#${name}`}
                         className={cn(
                             "flex items-center font-bold h-11 rounded-2xl px-5",
                             categoryActiveId === id && 'bg-white shadow-md shadow-gray-200 text-primary'
                         )}
                     >
-                        <button>{name}</button>
+                        {name}
                     </a>
                 ))
             }
