@@ -39,6 +39,7 @@ export const Filters = (props: Props) => {
         <RangeSlider min={0} max={1000} step={10} value={[0, 1000]} />
       </div>
 
+      {/* Фильтр ингредиентов */}
       <CheckboxFiltersGroup
         title={"Ингредиенты:"}
         className={"mt-5"}
