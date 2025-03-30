@@ -4,7 +4,7 @@ import {
   FilterChecboxProps,
   FilterCheckbox,
 } from "@/components/shared/filter-checkbox";
-import { Input } from "@/components/ui";
+import {Input, Skeleton} from "@/components/ui"
 import { ChangeEvent, useState } from "react";
 
 type Item = FilterChecboxProps;
@@ -14,9 +14,10 @@ type Props = {
   items: Item[];
   defaultItems: Item[];
   limit?: number;
+  loading?: boolean;
   searchInputPlaceholder?: string;
   onChange?: (values: string[]) => void;
-  defaultValue: Item[];
+  defaultValue?: string[];
   className?: string;
 };
 
@@ -27,11 +28,24 @@ const CheckboxFiltersGroup = ({
   limit = 5,
   searchInputPlaceholder = "Поиск ...",
   className,
+  loading,
   onChange,
   defaultValue,
 }: Props) => {
   const [showAll, setShowAll] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+
+  if (loading) {
+    return <div className={className}>
+      <p className={"font-bold mb-3"}>{title}</p>
+
+      {
+        ...Array(limit).fill(0).map((_, i) => (
+          <Skeleton key={i} className={"h-6 mb-4 rounded-[8px]"} />
+        ))
+      }
+    </div>
+  }
 
   const list = showAll
     ? items.filter((item) =>

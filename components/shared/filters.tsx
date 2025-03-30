@@ -6,20 +6,23 @@ import {FilterCheckbox} from "@/components/shared/filter-checkbox"
 import {Input} from "@/components/ui"
 import {RangeSlider} from "@/components/shared/range-slider"
 import CheckboxFiltersGroup from "@/components/shared/checkbox-filters-group"
+import {useFilterIngredients} from "@/hooks/useFilterIngredients"
 
 interface Props {
   className?: string
 }
 
-export const Filters = (props: Props) => {
-  const {className} = props
+export const Filters = ({className}: Props) => {
+  const {ingredients} = useFilterIngredients()
+  const items = ingredients.map(item => ({value: String(item.id), text: item.name}))
+
   return (
     <div className={cn("", className)}>
-      <Title text={"Фильтрация"} size={"sm"} className={"mb-5 font-bold"} />
+      <Title text={"Фильтрация"} size={"sm"} className={"mb-5 font-bold"}/>
 
       <div className={"flex flex-col gap-4"}>
-        <FilterCheckbox text={"Можно собирать"} value={"1"} />
-        <FilterCheckbox text={"Новинки"} value={"2"} />
+        <FilterCheckbox text={"Можно собирать"} value={"1"}/>
+        <FilterCheckbox text={"Новинки"} value={"2"}/>
       </div>
 
       {/* Фильтр цен */}
@@ -33,10 +36,10 @@ export const Filters = (props: Props) => {
             max={1000}
             defaultValue={0}
           />
-          <Input type="number" min={100} max={1000} placeholder="1000" />
+          <Input type="number" min={100} max={1000} placeholder="1000"/>
         </div>
 
-        <RangeSlider min={0} max={1000} step={10} value={[0, 1000]} />
+        <RangeSlider min={0} max={1000} step={10} value={[0, 1000]}/>
       </div>
 
       {/* Фильтр ингредиентов */}
@@ -44,109 +47,10 @@ export const Filters = (props: Props) => {
         title={"Ингредиенты:"}
         className={"mt-5"}
         limit={6}
-        defaultValue={[
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моцврелло",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Соленый огурчик",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-        ]}
-        items={[
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моцврелло",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Соленый огурчик",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моцврелло",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Соленый огурчик",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-        ]}
-        defaultItems={[
-          {
-            text: "Сырный соус",
-            value: "1",
-          },
-          {
-            text: "Моцврелло",
-            value: "2",
-          },
-          {
-            text: "Чеснок",
-            value: "3",
-          },
-          {
-            text: "Соленый огурчик",
-            value: "4",
-          },
-          {
-            text: "Красный лук",
-            value: "5",
-          },
-          {
-            text: "Томаты",
-            value: "6",
-          },
-        ]}
+        defaultItems={items.slice(0, 6)}
+        items={items}
+        loading={true}
       />
     </div>
-  );
+  )
 }
